@@ -5,12 +5,14 @@ import json
 
 class GameServer:
     def __init__(self, host, port):
-        self.pos1p = 100  # 初期位置
-        self.pos2p = 100  # 初期位置
+        self.pos1p = 240 # 初期位置
+        self.pos2p = 240 # 初期位置
         self.ball_x = 320
         self.ball_y = 240
         self.ball_dx = 2  # ボールの速度
         self.ball_dy = 2
+        self.point1p = 0
+        self.point2p = 0
         self.clients = []
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -19,7 +21,6 @@ class GameServer:
         print(f"Server started at {host}:{port}")
 
     def update_ball_position(self):
-        # ボールの位置を更新
         self.ball_x += self.ball_dx
         self.ball_y += self.ball_dy
 
@@ -35,10 +36,12 @@ class GameServer:
             self.ball_x = 320
             self.ball_y = 240
             self.ball_dx *= -1
+            self.point2p += 1
         elif self.ball_x >= 640:
             self.ball_x = 320
             self.ball_y = 240
             self.ball_dx *= -1
+            self.point1p += 1
 
     def broadcast_game_state(self):
         while True:
@@ -47,7 +50,9 @@ class GameServer:
                 'pos1p': self.pos1p,
                 'pos2p': self.pos2p,
                 'ball_x': self.ball_x,
-                'ball_y': self.ball_y
+                'ball_y': self.ball_y,
+                'point1p': self.point1p,
+                'point2p': self.point2p
             }
             state_json = json.dumps(state).encode('utf-8')
             for client in self.clients:

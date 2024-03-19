@@ -13,6 +13,8 @@ def receive_data(s, game_state):
                 game_state['pos2p'] = state['pos2p']
                 game_state['ball_x'] = state['ball_x']
                 game_state['ball_y'] = state['ball_y']
+                game_state['point1p'] = state['point1p']
+                game_state['point2p'] = state['point2p']
             except ValueError as e:
                 print(f"Error processing received data: {e}")
             except KeyError as e:
@@ -24,7 +26,7 @@ def main():
     pygame.display.set_caption("Client-1P")
     font = pygame.font.Font(None, 36)
 
-    game_state = {'pos1p': 100, 'pos2p': 100}
+    game_state = {'pos1p': 240, 'pos2p': 240}
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(('pi5.local', 65432))
@@ -33,6 +35,7 @@ def main():
 
     running = True
     while running:
+        screen.fill((0, 0, 0))  # 背景を黒で塗りつぶし
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -45,12 +48,14 @@ def main():
 
         pygame.draw.line(screen, (255, 255, 255), (100, game_state['pos1p'] - 30), (100, game_state['pos1p'] + 30), 10)
         pygame.draw.line(screen, (255, 255, 255), (540, game_state['pos2p'] - 30), (540, game_state['pos2p'] + 30), 10)
-
         pygame.draw.circle(screen, (255, 255, 255), (game_state['ball_x'], game_state['ball_y']), 10)
+        point1p = font.render(str(game_state['point1p']), True, (255, 255, 255))
+        point2p = font.render(str(game_state['point2p']), True, (255, 255, 255))
+        screen.blit(point1p, (240, 50))
+        screen.blit(point2p, (400, 50))
 
         pygame.display.flip()
         pygame.time.Clock().tick(60)
-        screen.fill((0, 0, 0))  # 背景を黒で塗りつぶし
 
     pygame.quit()
     s.close()
