@@ -44,8 +44,8 @@ def main():
         elif keys[pygame.K_DOWN]:
             s.sendall('DOWN_2P'.encode())
 
-        pygame.draw.line(screen, (255, 255, 255), (100, game_state['pos1p'] - 20), (100, game_state['pos1p'] + 20), 10)
-        pygame.draw.line(screen, (255, 255, 255), (540, game_state['pos2p'] - 20), (540, game_state['pos2p'] + 20), 10)
+        pygame.draw.line(screen, (255, 255, 255), (100, game_state['pos1p'] - 30), (100, game_state['pos1p'] + 30), 10)
+        pygame.draw.line(screen, (255, 255, 255), (540, game_state['pos2p'] - 30), (540, game_state['pos2p'] + 30), 10)
 
         pygame.draw.circle(screen, (255, 255, 255), (game_state['ball_x'], game_state['ball_y']), 10)
 

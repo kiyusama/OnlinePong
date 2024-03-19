@@ -29,6 +29,11 @@ class GameServer:
         if self.ball_y >= 480 or self.ball_y <= 0:
             self.ball_dy *= -1
 
+        if self.ball_x == 100 and self.pos1p - 30 <= self.ball_y <= self.pos1p + 30:
+            self.ball_dx *= -1
+        if self.ball_x == 540 and self.pos2p - 30 <= self.ball_y <= self.pos2p + 30:
+            self.ball_dx *= -1
+
     def broadcast_game_state(self):
         while True:
             self.update_ball_position()  # ボールの位置を更新
@@ -53,13 +58,17 @@ class GameServer:
 
             command = data.decode()
             if command.startswith('UP_1P'):
-                self.pos1p -= 5  # 上に移動
+                if self.pos1p > 0 + 30:
+                    self.pos1p -= 5
             elif command.startswith('DOWN_1P'):
-                self.pos1p += 5  # 下に移動
+                if self.pos1p < 480 - 30:
+                    self.pos1p += 5
             elif command.startswith('UP_2P'):
-                self.pos2p -= 5  # 上に移動
+                if self.pos2p > 0 + 30:
+                    self.pos2p -= 5
             elif command.startswith('DOWN_2P'):
-                self.pos2p += 5  # 下に移動
+                if self.pos2p < 480 - 30:
+                    self.pos2p += 5
 
         self.clients.remove(conn)
         conn.close()
