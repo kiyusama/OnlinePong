@@ -23,15 +23,21 @@ class GameServer:
         self.ball_x += self.ball_dx
         self.ball_y += self.ball_dy
 
-        # 画面端でのボールの反射などのロジックをここに追加
-        if self.ball_x >= 640 or self.ball_x <= 0:
-            self.ball_dx *= -1  # 方向を反転
         if self.ball_y >= 480 or self.ball_y <= 0:
             self.ball_dy *= -1
 
         if self.ball_x == 100 and self.pos1p - 30 <= self.ball_y <= self.pos1p + 30:
             self.ball_dx *= -1
-        if self.ball_x == 540 and self.pos2p - 30 <= self.ball_y <= self.pos2p + 30:
+        elif self.ball_x == 540 and self.pos2p - 30 <= self.ball_y <= self.pos2p + 30:
+            self.ball_dx *= -1
+
+        if self.ball_x <= 0:
+            self.ball_x = 320
+            self.ball_y = 240
+            self.ball_dx *= -1
+        elif self.ball_x >= 640:
+            self.ball_x = 320
+            self.ball_y = 240
             self.ball_dx *= -1
 
     def broadcast_game_state(self):
