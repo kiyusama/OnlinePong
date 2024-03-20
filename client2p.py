@@ -26,7 +26,7 @@ def main():
     pygame.display.set_caption("Client-2P")
     font = pygame.font.Font(None, 36)
 
-    game_state = {'pos1p': 240, 'pos2p': 240}
+    game_state = {'pos1p': 240, 'pos2p': 240, 'ball_x': 320, 'ball_y': 240, 'point1p': 0, 'point2p': 0}
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(('pi5.local', 65432))
@@ -51,8 +51,8 @@ def main():
         pygame.draw.circle(screen, (255, 255, 255), (game_state['ball_x'], game_state['ball_y']), 10)
         point1p = font.render(str(game_state['point1p']), True, (255, 255, 255))
         point2p = font.render(str(game_state['point2p']), True, (255, 255, 255))
-        screen.blit(point1p, (50, 50))
-        screen.blit(point2p, (50, 100))
+        screen.blit(point1p, (240, 50))
+        screen.blit(point2p, (400, 50))
 
         pygame.display.flip()
         pygame.time.Clock().tick(60)

@@ -26,7 +26,7 @@ def main():
     pygame.display.set_caption("Client-1P")
     font = pygame.font.Font(None, 36)
 
-    game_state = {'pos1p': 240, 'pos2p': 240}
+    game_state = {'pos1p': 240, 'pos2p': 240, 'ball_x': 320, 'ball_y': 240, 'point1p': 0, 'point2p': 0}
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(('pi5.local', 65432))
