@@ -51,8 +51,15 @@ def main():
         pygame.draw.circle(screen, (255, 255, 255), (game_state['ball_x'], game_state['ball_y']), 10)
         point1p = font.render(str(game_state['point1p']), True, (255, 255, 255))
         point2p = font.render(str(game_state['point2p']), True, (255, 255, 255))
-        screen.blit(point1p, (240, 50))
-        screen.blit(point2p, (400, 50))
+        screen.blit(point1p, (230, 50))
+        screen.blit(point2p, (390, 50))
+        if game_state['point1p'] >= 5:
+            winner = font.render("1P wins!", True, (255, 255, 255))
+            screen.blit(winner, (270, 200))
+        elif game_state['point2p'] >= 5:
+            winner = font.render("2P wins!", True, (255, 255, 255))
+            screen.blit(winner, (270, 200))
+            
 
         pygame.display.flip()
         pygame.time.Clock().tick(60)

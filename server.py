@@ -32,16 +32,19 @@ class GameServer:
         elif self.ball_x == 540 and self.pos2p - 30 <= self.ball_y <= self.pos2p + 30:
             self.ball_dx *= -1
 
-        if self.ball_x <= 0:
-            self.ball_x = 320
-            self.ball_y = 240
-            self.ball_dx *= -1
-            self.point2p += 1
-        elif self.ball_x >= 640:
-            self.ball_x = 320
-            self.ball_y = 240
-            self.ball_dx *= -1
-            self.point1p += 1
+        if self.point1p <= 4 and self.point2p <= 4:
+            if self.ball_x <= 0:
+                self.point2p += 1
+                if self.point2p < 5:
+                    self.ball_x = 320
+                    self.ball_y = 240
+                    self.ball_dx *= -1
+            elif self.ball_x >= 640:
+                self.point1p += 1
+                if self.point1p < 5:
+                    self.ball_x = 320
+                    self.ball_y = 240
+                    self.ball_dx *= -1
 
     def broadcast_game_state(self):
         while True:
